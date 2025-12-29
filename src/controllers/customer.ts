@@ -1,4 +1,5 @@
 import { Elysia, t } from "elysia";
+import { customerDTO } from "../models/customer-dto";
 
 const customerController = new Elysia()
   .get("/customers", () => {
@@ -27,11 +28,17 @@ const customerController = new Elysia()
       },
     }
   )
-  .post("customers", ({ body, set }) => {
-    // set.status = "Created";
-    set.status = 201;
-    return body;
-  })
+  .post(
+    "customers",
+    ({ body, set }) => {
+      // set.status = "Created";
+      set.status = 201;
+      return body;
+    },
+    {
+      body: customerDTO,
+    }
+  )
   .patch("customers/:id/update", ({ params: { id }, body }) => {
     return {
       id,
