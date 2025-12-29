@@ -1,7 +1,9 @@
 import { Elysia } from "elysia";
+import { openapi } from "@elysiajs/openapi";
 import customerController from "./controllers/customer";
 
 const app = new Elysia({ prefix: "/api" })
+  .use(openapi())
   .get("/", () => "Hello Elysia and bun")
   .get("/version", () => "1.0.0")
   .use(customerController)
