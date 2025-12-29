@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import customerController from "./controllers/customer";
 
-const app = new Elysia()
+const app = new Elysia({ prefix: "/api" })
   .get("/", () => "Hello Elysia and bun")
   .get("/version", () => "1.0.0")
   .use(customerController)
