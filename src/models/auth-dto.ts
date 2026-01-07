@@ -10,11 +10,23 @@ export const authModel = new Elysia().model({
       },
     }),
     email: t.String({
-      minLength: 1,
+      minLength: 10,
       format: "email",
+      // error(validation) {
+      //   return validation.errors.map((err) => {
+      //     return { message: err.message, field: err.path };
+      //   });
+      // },
       error(validation) {
         return validation.errors.map((err) => {
-          return { message: err.message, field: err.path };
+          switch (err.type) {
+            case 52:
+              return { message: "email must required", field: err.path };
+            case 50:
+              return { message: "email format is invalid", field: err.path };
+            default:
+              return { message: err.message, field: err.path };
+          }
         });
       },
     }),
