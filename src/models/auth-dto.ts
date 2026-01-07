@@ -1,5 +1,4 @@
 import { Elysia, t } from "elysia";
-import { error } from "node:console";
 
 export const authModel = new Elysia().model({
   "auth.signUp": t.Object({
