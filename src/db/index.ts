@@ -2,7 +2,7 @@ import { SQL } from "bun";
 
 export const sql = new SQL({
   // Connection details (adapter is auto-detected as PostgreSQL)
-  url: "postgres://root:Admin_1jj395qu@localhost:5432/mydb",
+  url: process.env.DB_URL,
 
   // Alternative connection parameters
   //   hostname: "localhost",
