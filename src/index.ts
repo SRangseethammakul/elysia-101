@@ -1,10 +1,26 @@
 import { Elysia } from "elysia";
+import { logger } from "@bogeychan/elysia-logger";
 import { openapi } from "@elysiajs/openapi";
+import { cors } from "@elysiajs/cors";
+import { staticPlugin } from "@elysiajs/static";
 import customerController from "./controllers/customer";
 import authController from "./controllers/auth";
 
 const app = new Elysia({ prefix: "/api" })
-  .use(openapi())
+  .use(cors())
+  .use(logger())
+  .use(staticPlugin({ prefix: "/images", assets: "public" }))
+  .use(
+    openapi({
+      documentation: {
+        info: {
+          title: "Elysia 101 API",
+          version: "1.0.2",
+          description: "This is a sample Elysia 101 API",
+        },
+      },
+    }),
+  )
   .get("/", () => "Hello Elysia and bun")
   .get("/version", () => ({
     version: "1.0.0",
@@ -18,5 +34,5 @@ const app = new Elysia({ prefix: "/api" })
 console.log(
   `🦊 Elysia is running at ${app.server?.hostname}:${
     app.server?.port
-  }, stage: ${process.env.NODE_ENV || "development"}`
+  }, stage: ${process.env.NODE_ENV || "development"}`,
 );
