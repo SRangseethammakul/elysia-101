@@ -5,8 +5,14 @@ import { cors } from "@elysiajs/cors";
 import { staticPlugin } from "@elysiajs/static";
 import customerController from "./controllers/customer";
 import authController from "./controllers/auth";
+import uploadController from "./controllers/upload";
 
-const app = new Elysia({ prefix: "/api" })
+const app = new Elysia({
+  prefix: "/api",
+  serve: {
+    maxRequestBodySize: 10 * 1024 * 1024, // 10 MB
+  },
+})
   .use(cors())
   .use(logger())
   .use(staticPlugin({ prefix: "/images", assets: "public" }))
@@ -29,6 +35,7 @@ const app = new Elysia({ prefix: "/api" })
   }))
   .use(customerController)
   .use(authController)
+  .use(uploadController)
   .listen(parseInt(process.env.PORT || "3000"));
 
 console.log(
