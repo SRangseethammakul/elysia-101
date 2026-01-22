@@ -15,7 +15,13 @@ const app = new Elysia({
 })
   .use(cors())
   .use(logger())
-  .use(staticPlugin({ prefix: "/images", assets: "public" }))
+  .use(
+    staticPlugin({
+      prefix: "/images",
+      assets: "./public",
+      alwaysStatic: false,
+    }),
+  )
   .use(
     openapi({
       documentation: {
@@ -27,7 +33,7 @@ const app = new Elysia({
       },
     }),
   )
-  .get("/", () => "Hello Elysia and bun")
+  .get("/", () => `Hello Elysia and bun and ${process.env.ACT || "no act"}`)
   .get("/version", () => ({
     version: "1.0.0",
     stage: process.env.NODE_ENV || "development-process",
